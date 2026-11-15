@@ -90,6 +90,10 @@ zu finanzieren, damit die Sicherheitswarnung beim Installieren entfällt.
 
 Fehler gefunden oder Idee? Gerne als Issue melden.
 
+## Entstehung
+
+SoundLadder wurde von Dirk Kredinger mit Hilfe von [Claude](https://claude.ai) (Anthropic) entwickelt.
+
 ## English
 
 **SoundLadder** is a tiny macOS menu bar app that picks your audio output from a ranked list:
@@ -97,6 +101,7 @@ if the top device isn't connected, the next available one is used. Drag & drop o
 on connect/disconnect, excluded devices, optional system-sound routing, launch at login.
 Download the `.pkg` from Releases (right-click → Open on first launch, as it isn't notarized).
 Free and MIT-licensed – [buy me a coffee on Ko-fi](https://ko-fi.com/mbmf17) if you like it.
+Built by Dirk Kredinger with the help of [Claude](https://claude.ai) by Anthropic.
 
 ## Lizenz
 
