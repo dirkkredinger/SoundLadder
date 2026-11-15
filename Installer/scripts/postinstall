@@ -1,0 +1,8 @@
+#!/bin/sh
+# App nach der Installation im Namen des angemeldeten Benutzers starten
+USER_NAME=$(stat -f %Su /dev/console)
+USER_ID=$(id -u "$USER_NAME")
+if [ -n "$USER_NAME" ] && [ "$USER_NAME" != "root" ]; then
+  launchctl asuser "$USER_ID" sudo -u "$USER_NAME" open -a "/Applications/AudioPriority.app"
+fi
+exit 0

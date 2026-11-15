@@ -1,0 +1,4 @@
+#!/bin/sh
+# Laufende Instanz beenden, damit sie ersetzt werden kann
+pkill -x AudioPriority 2>/dev/null
+exit 0

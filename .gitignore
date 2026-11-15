@@ -1,0 +1,7 @@
+# Build-Ergebnisse
+/.build/
+/build/
+/dist/
+/Resources/AppIcon.iconset/
+.swiftpm/
+.DS_Store
