@@ -27,7 +27,9 @@ Beispiel:
 3. Monitor-Lautsprecher
 4. Eingebaute Lautsprecher → Rückfallebene
 
-<!-- TODO: Screenshot einfügen, z. B. Docs/screenshot.png -->
+<p align="center">
+  <img src="Docs/screenshot.png" alt="SoundLadder: Prioritätenliste und Menüleisten-Menü" width="900">
+</p>
 
 ## Funktionen
 
@@ -62,6 +64,9 @@ Benötigt nur die Xcode Command Line Tools (`xcode-select --install`).
 ```bash
 ./build.sh                               # -> build/SoundLadder.app
 VERSION=1.2 Installer/make_installer.sh  # -> dist/SoundLadder-1.2.pkg
+
+# Werbebild neu erzeugen (Demo-Daten, echte Einstellungen bleiben unberührt)
+build/SoundLadder.app/Contents/MacOS/SoundLadder --screenshot Docs/screenshot.png
 ```
 
 ### Aufbau
@@ -73,6 +78,7 @@ VERSION=1.2 Installer/make_installer.sh  # -> dist/SoundLadder-1.2.pkg
 | `Sources/SoundLadder/SoundLadderApp.swift` | SwiftUI-Fenster und Menüleisten-Menü |
 | `Sources/SoundLadder/MenuBarIcon.swift` | Menüleisten-Symbol |
 | `Sources/SoundLadder/Links.swift` | Spenden-/Projekt-Links, „Über“-Fenster |
+| `Sources/SoundLadder/Screenshot.swift` | erzeugt das Werbebild `Docs/screenshot.png` im Demo-Modus |
 | `Tools/make_icon.swift` | erzeugt das App-Icon |
 | `Installer/` | pkg-Installer und Deinstallations-Skript |
 

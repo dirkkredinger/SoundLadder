@@ -22,7 +22,7 @@ final class PriorityStore: ObservableObject {
     @Published var includeSystemOutput: Bool { didSet { defaults.set(includeSystemOutput, forKey: Keys.system); if autoSwitch { apply() } } }
     @Published var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled {
         didSet {
-            guard launchAtLogin != (SMAppService.mainApp.status == .enabled) else { return }
+            guard !isDemo, launchAtLogin != (SMAppService.mainApp.status == .enabled) else { return }
             do {
                 if launchAtLogin { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
             } catch {
@@ -31,7 +31,9 @@ final class PriorityStore: ObservableObject {
         }
     }
 
-    private let defaults = UserDefaults.standard
+    private var defaults = UserDefaults.standard
+    /// Demo-Modus (für Screenshots): Beispielgeräte, nichts wird gespeichert oder umgeschaltet.
+    private(set) var isDemo = false
     private enum Keys {
         static let entries = "priorityEntries"
         static let auto = "autoSwitch"
@@ -49,7 +51,16 @@ final class PriorityStore: ObservableObject {
         }
     }
 
-    init() {
+    init(demo: Bool = false) {
+        if demo {
+            isDemo = true
+            defaults = UserDefaults(suiteName: "de.mbmf17.soundladder.demo") ?? .standard
+            autoSwitch = true
+            includeSystemOutput = true
+            launchAtLogin = true
+            loadDemoData()
+            return
+        }
         Self.migrateLegacySettings()
         autoSwitch = defaults.object(forKey: Keys.auto) as? Bool ?? true
         includeSystemOutput = defaults.object(forKey: Keys.system) as? Bool ?? true
@@ -134,6 +145,7 @@ final class PriorityStore: ObservableObject {
     }
 
     func select(_ device: AudioDevice, reason: String = "Manuell") {
+        guard !isDemo else { return }
         var ok = true
         if CoreAudioHelper.defaultOutput() != device.id {
             ok = CoreAudioHelper.setDefaultOutput(device.id)
@@ -161,7 +173,27 @@ final class PriorityStore: ObservableObject {
         entries.removeAll { $0.uid == entry.uid }
     }
 
+    private func loadDemoData() {
+        let demo: [(String, UInt32, Bool, Bool)] = [
+            ("Scarlett 2i2 USB", kAudioDeviceTransportTypeUSB, false, true),
+            ("AirPods Pro", kAudioDeviceTransportTypeBluetooth, true, true),
+            ("Studio Display", kAudioDeviceTransportTypeDisplayPort, true, true),
+            ("LG UltraWide", kAudioDeviceTransportTypeHDMI, true, true),
+            ("MacBook Pro-Lautsprecher", kAudioDeviceTransportTypeBuiltIn, true, true),
+            ("Zoom Audio Device", kAudioDeviceTransportTypeVirtual, true, false),
+        ]
+        entries = demo.map { PriorityEntry(uid: "demo.\($0.0)", name: $0.0, enabled: $0.3, transportType: $0.1) }
+        var devices: [String: AudioDevice] = [:]
+        for (i, d) in demo.enumerated() where d.2 {
+            devices["demo.\(d.0)"] = AudioDevice(id: AudioDeviceID(100 + i), uid: "demo.\(d.0)", name: d.0, transportType: d.1)
+        }
+        connected = devices
+        currentUID = "demo.AirPods Pro"
+        lastAction = "Automatisch: AirPods Pro (14:32)"
+    }
+
     private func save() {
+        guard !isDemo else { return }
         if let data = try? JSONEncoder().encode(entries) { defaults.set(data, forKey: Keys.entries) }
     }
 }

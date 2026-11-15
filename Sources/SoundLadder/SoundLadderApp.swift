@@ -4,15 +4,22 @@ import SwiftUI
 
 @main
 struct SoundLadderApp: App {
-    @StateObject private var store = PriorityStore()
+    @StateObject private var store = PriorityStore(demo: Screenshot.isRequested)
 
     var body: some Scene {
         Window("SoundLadder", id: "main") {
             PriorityListView()
                 .environmentObject(store)
+                .forceActiveAppearance(Screenshot.isRequested)
                 .frame(minWidth: 460, minHeight: 380)
                 // Solange das Fenster offen ist, erscheint die App im Dock
-                .onAppear { NSApp.setActivationPolicy(.regular) }
+                .onAppear {
+                    NSApp.setActivationPolicy(.regular)
+                    if Screenshot.isRequested {
+                        Screenshot.prepare()
+                        Screenshot.captureWhenReady()
+                    }
+                }
                 .onDisappear { NSApp.setActivationPolicy(.accessory) }
         }
         .windowResizability(.contentMinSize)
@@ -129,7 +136,7 @@ struct DeviceRow: View {
                 get: { entry.enabled },
                 set: { store.setEnabled(entry, $0) }
             ))
-            .toggleStyle(.switch)
+            .rowSwitchStyle()
             .labelsHidden()
             .help("Deaktivierte Geräte werden nie automatisch gewählt")
         }
