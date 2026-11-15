@@ -1,4 +1,5 @@
 import AppKit
+import ImageIO
 import SwiftUI
 
 /// Erzeugt das Werbebild für GitHub.
@@ -11,7 +12,12 @@ enum Screenshot {
         guard let i = args.firstIndex(of: "--screenshot"), i + 1 < args.count else { return nil }
         return args[i + 1]
     }
-    nonisolated static var isRequested: Bool { outputPath != nil }
+    nonisolated static var gifPath: String? {
+        let args = CommandLine.arguments
+        guard let i = args.firstIndex(of: "--gif"), i + 1 < args.count else { return nil }
+        return args[i + 1]
+    }
+    nonisolated static var isRequested: Bool { outputPath != nil || gifPath != nil }
 
     static func prepare() {
         NSApp.appearance = NSAppearance(named: .aqua)
@@ -19,8 +25,17 @@ enum Screenshot {
 
     static func captureWhenReady() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            guard let window = NSApp.windows.first(where: { $0.title == "SoundLadder" }),
-                  let path = outputPath else { NSApp.terminate(nil); return }
+            guard let window = NSApp.windows.first(where: { $0.title == "SoundLadder" }) else {
+                NSApp.terminate(nil); return
+            }
+            if let gif = gifPath {
+                NSApp.activate(ignoringOtherApps: true)
+                window.makeKeyAndOrderFront(nil)
+                window.setContentSize(NSSize(width: 520, height: 560))
+                recordGIF(window: window, path: gif)
+                return
+            }
+            guard let path = outputPath else { NSApp.terminate(nil); return }
             NSApp.activate(ignoringOtherApps: true)
             window.makeKeyAndOrderFront(nil)
             window.setContentSize(NSSize(width: 520, height: 560))
@@ -35,6 +50,86 @@ enum Screenshot {
                 NSApp.terminate(nil)
             }
         }
+    }
+
+    // MARK: Animiertes GIF
+
+    private struct GIFStep {
+        let airPods: Bool
+        let time: String
+        let caption: String
+        let seconds: Double
+    }
+
+    private static func recordGIF(window: NSWindow, path: String) {
+        let steps = [
+            GIFStep(airPods: true, time: "2:32 PM", caption: L("AirPods connected – SoundLadder uses them"), seconds: 2.2),
+            GIFStep(airPods: false, time: "2:33 PM", caption: L("AirPods off – the next device takes over"), seconds: 2.6),
+            GIFStep(airPods: true, time: "2:34 PM", caption: L("AirPods back – switched back automatically"), seconds: 2.6),
+        ]
+        var frames: [(CGImage, Double)] = []
+
+        func capture(_ index: Int) {
+            guard index < steps.count else {
+                writeGIF(frames, to: path)
+                NSApp.terminate(nil)
+                return
+            }
+            let step = steps[index]
+            PriorityStore.demoInstance?.demoSetAirPods(connected: step.airPods, time: step.time)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                let frame = composeFrame(window: snapshot(of: window), caption: step.caption)
+                if let cg = frame.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+                    frames.append((cg, step.seconds))
+                }
+                capture(index + 1)
+            }
+        }
+        capture(0)
+    }
+
+    private static func composeFrame(window: NSImage, caption: String) -> NSImage {
+        let size = NSSize(width: 680, height: 720)
+        let image = NSImage(size: size, flipped: true) { rect in
+            NSGradient(colors: [
+                NSColor(srgbRed: 0.98, green: 0.36, blue: 0.47, alpha: 1),
+                NSColor(srgbRed: 0.55, green: 0.27, blue: 0.95, alpha: 1),
+                NSColor(srgbRed: 0.16, green: 0.36, blue: 0.98, alpha: 1),
+            ])!.draw(in: rect, angle: -35)
+            let winRect = NSRect(x: (rect.width - window.size.width) / 2, y: 28,
+                                 width: window.size.width, height: window.size.height)
+            NSGraphicsContext.saveGraphicsState()
+            NSBezierPath(roundedRect: winRect, xRadius: 12, yRadius: 12).addClip()
+            window.draw(in: winRect, from: .zero, operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
+            NSGraphicsContext.restoreGraphicsState()
+            let style = NSMutableParagraphStyle()
+            style.alignment = .center
+            let text = NSAttributedString(string: caption, attributes: [
+                .font: NSFont.systemFont(ofSize: 24, weight: .bold),
+                .foregroundColor: NSColor.white, .paragraphStyle: style])
+            text.draw(in: NSRect(x: 20, y: winRect.maxY + 28, width: rect.width - 40, height: 40))
+            return true
+        }
+        let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(size.width), pixelsHigh: Int(size.height),
+                                   bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                                   colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!
+        NSGraphicsContext.saveGraphicsState()
+        NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
+        image.draw(in: NSRect(origin: .zero, size: size))
+        NSGraphicsContext.restoreGraphicsState()
+        let out = NSImage(size: size)
+        out.addRepresentation(rep)
+        return out
+    }
+
+    private static func writeGIF(_ frames: [(CGImage, Double)], to path: String) {
+        guard let dest = CGImageDestinationCreateWithURL(URL(fileURLWithPath: path) as CFURL,
+                                                         "com.compuserve.gif" as CFString, frames.count, nil) else { return }
+        CGImageDestinationSetProperties(dest, [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFLoopCount: 0]] as CFDictionary)
+        for (image, seconds) in frames {
+            CGImageDestinationAddImage(dest, image, [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFDelayTime: seconds]] as CFDictionary)
+        }
+        CGImageDestinationFinalize(dest)
     }
 
     /// Fensterinhalt inkl. Titelleiste als Bild.

@@ -51,6 +51,9 @@ final class PriorityStore: ObservableObject {
         }
     }
 
+    /// Zuletzt erzeugter Demo-Store (für die GIF-Aufnahme).
+    static weak var demoInstance: PriorityStore?
+
     init(demo: Bool = false) {
         if demo {
             isDemo = true
@@ -59,6 +62,7 @@ final class PriorityStore: ObservableObject {
             includeSystemOutput = true
             launchAtLogin = true
             loadDemoData()
+            Self.demoInstance = self
             return
         }
         Self.migrateLegacySettings()
@@ -191,6 +195,22 @@ final class PriorityStore: ObservableObject {
         connected = devices
         currentUID = "demo.AirPods Pro"
         lastAction = String(format: L("%@: %@ (%@)"), L("Automatic"), "AirPods Pro", L("2:32 PM"))
+    }
+
+    /// Demo: simuliert das Trennen bzw. Wiederverbinden der AirPods.
+    func demoSetAirPods(connected isOn: Bool, time: String) {
+        guard isDemo else { return }
+        let airPods = "demo.AirPods Pro"
+        var devices = connected
+        if isOn {
+            devices[airPods] = AudioDevice(id: 101, uid: airPods, name: "AirPods Pro", transportType: kAudioDeviceTransportTypeBluetooth)
+        } else {
+            devices[airPods] = nil
+        }
+        connected = devices
+        let target = preferred
+        currentUID = target?.uid
+        lastAction = String(format: L("%@: %@ (%@)"), L("Automatic"), target?.name ?? "–", L(time))
     }
 
     private func save() {

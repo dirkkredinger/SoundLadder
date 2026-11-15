@@ -29,6 +29,10 @@
 macOS likes to switch your sound to whatever was plugged in last – monitor speakers, a USB dongle, the dock.
 With SoundLadder you decide **once** what you prefer, and the app keeps it that way.
 
+<p align="center">
+  <img src="Docs/demo.gif" alt="SoundLadder switching automatically when AirPods disconnect and reconnect" width="560">
+</p>
+
 Example ladder:
 
 1. USB headset → always this one when it's plugged in
@@ -84,6 +88,8 @@ VERSION=1.3 Installer/make_installer.sh  # -> dist/SoundLadder-1.3.pkg
 # Re-create the promo images (demo data, your real settings stay untouched)
 build/SoundLadder.app/Contents/MacOS/SoundLadder --screenshot Docs/screenshot.png -AppleLanguages "(en)"
 build/SoundLadder.app/Contents/MacOS/SoundLadder --screenshot Docs/screenshot-de.png -AppleLanguages "(de)"
+build/SoundLadder.app/Contents/MacOS/SoundLadder --gif Docs/demo.gif -AppleLanguages "(en)"
+build/SoundLadder.app/Contents/MacOS/SoundLadder --gif Docs/demo-de.gif -AppleLanguages "(de)"
 ```
 
 | File | Purpose |
@@ -93,7 +99,7 @@ build/SoundLadder.app/Contents/MacOS/SoundLadder --screenshot Docs/screenshot-de
 | `Sources/SoundLadder/SoundLadderApp.swift` | SwiftUI window and menu bar menu |
 | `Sources/SoundLadder/MenuBarIcon.swift` | Menu bar icon |
 | `Sources/SoundLadder/Links.swift` | Donation/project links, About panel |
-| `Sources/SoundLadder/Screenshot.swift` | Renders the promo images in demo mode |
+| `Sources/SoundLadder/Screenshot.swift` | Renders the promo images and demo GIFs in demo mode |
 | `Resources/*.lproj` | Translations (English is the base language) |
 | `Tools/make_icon.swift` | Generates the app icon |
 | `Installer/` | pkg installer and uninstall script |
@@ -119,7 +125,7 @@ Built by Dirk Kredinger with the help of [Claude](https://claude.ai) by Anthropi
 ## Deutsch
 
 <p align="center">
-  <img src="Docs/screenshot-de.png" alt="SoundLadder auf Deutsch" width="700">
+  <img src="Docs/demo-de.gif" alt="SoundLadder schaltet automatisch um, wenn die AirPods getrennt und wieder verbunden werden" width="560">
 </p>
 
 **SoundLadder** ist eine kleine macOS-Menüleisten-App, die deine Audioausgabe nach einer festen Rangliste wählt.
