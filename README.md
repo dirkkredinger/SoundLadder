@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://ko-fi.com/DEIN_KOFI_NAME"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Auf Ko-fi unterstützen"></a>
+  <a href="https://ko-fi.com/mbmf17"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Auf Ko-fi unterstützen"></a>
 </p>
 
 ---
@@ -79,7 +79,7 @@ VERSION=1.2 Installer/make_installer.sh  # -> dist/AudioPriority-1.2.pkg
 ## Unterstützen
 
 Die App ist kostenlos und bleibt es. Wenn sie dir nützt, freue ich mich über einen Kaffee auf
-**[Ko-fi](https://ko-fi.com/DEIN_KOFI_NAME)** ☕ – das hilft z. B., irgendwann ein Apple-Entwicklerkonto
+**[Ko-fi](https://ko-fi.com/mbmf17)** ☕ – das hilft z. B., irgendwann ein Apple-Entwicklerkonto
 zu finanzieren, damit die Sicherheitswarnung beim Installieren entfällt.
 
 Fehler gefunden oder Idee? Gerne als Issue melden.
@@ -90,7 +90,7 @@ Fehler gefunden oder Idee? Gerne als Issue melden.
 if the top device isn't connected, the next available one is used. Drag & drop ordering, auto-switching
 on connect/disconnect, excluded devices, optional system-sound routing, launch at login.
 Download the `.pkg` from Releases (right-click → Open on first launch, as it isn't notarized).
-Free and MIT-licensed – [buy me a coffee on Ko-fi](https://ko-fi.com/DEIN_KOFI_NAME) if you like it.
+Free and MIT-licensed – [buy me a coffee on Ko-fi](https://ko-fi.com/mbmf17) if you like it.
 
 ## Lizenz
 

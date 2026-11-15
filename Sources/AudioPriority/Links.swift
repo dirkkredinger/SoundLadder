@@ -2,8 +2,7 @@ import AppKit
 
 /// Externe Links an einer Stelle – vor der Veröffentlichung hier anpassen.
 enum Links {
-    // TODO: echten Ko-fi-Namen eintragen
-    static let donate = URL(string: "https://ko-fi.com/DEIN_KOFI_NAME")!
+    static let donate = URL(string: "https://ko-fi.com/mbmf17")!
     // TODO: echte GitHub-Adresse eintragen
     static let project = URL(string: "https://github.com/DEIN_GITHUB_NAME/AudioPriority")!
 
