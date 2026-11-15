@@ -63,10 +63,13 @@ struct PriorityListView: View {
                     Button("Jetzt anwenden") { store.apply() }
                         .keyboardShortcut("r")
                 }
-                if !store.lastAction.isEmpty {
+                HStack {
                     Text(store.lastAction)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                    Spacer()
+                    Link("Gefällt dir die App? Unterstütze sie auf Ko-fi ♥", destination: Links.donate)
+                        .font(.caption)
                 }
             }
             .padding()
@@ -183,6 +186,9 @@ struct MenuContent: View {
             NSApp.activate(ignoringOtherApps: true)
         }
         .keyboardShortcut(",")
+        Divider()
+        Button("Projekt unterstützen ♥") { NSWorkspace.shared.open(Links.donate) }
+        Button("Über Audio-Prioritäten") { Links.showAbout() }
         Divider()
         Button("Beenden") { NSApp.terminate(nil) }
             .keyboardShortcut("q")
