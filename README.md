@@ -53,7 +53,9 @@ Example ladder:
 ### Homebrew
 
 ```bash
-brew install --cask dirkkredinger/tap/soundladder
+brew tap dirkkredinger/tap
+brew trust dirkkredinger/tap      # Homebrew 7+ asks you to trust third-party taps
+brew install --cask soundladder
 ```
 
 ### Installer
@@ -131,7 +133,7 @@ Schnellwahl in der Menüleiste · Start bei Anmeldung.
 **Installation:**
 
 1. `SoundLadder-x.y.pkg` aus dem [neuesten Release](https://github.com/dirkkredinger/SoundLadder/releases/latest) laden
-   – oder per Homebrew: `brew install --cask dirkkredinger/tap/soundladder`.
+   – oder per Homebrew: `brew tap dirkkredinger/tap && brew trust dirkkredinger/tap && brew install --cask soundladder`.
 2. Die App ist nicht von Apple beglaubigt. macOS blockiert sie daher beim ersten Öffnen:
    **Systemeinstellungen → Datenschutz & Sicherheit** öffnen, nach unten scrollen und bei SoundLadder **„Dennoch öffnen“** klicken.
 3. Installer durchklicken – die App startet und erscheint in der Menüleiste.
