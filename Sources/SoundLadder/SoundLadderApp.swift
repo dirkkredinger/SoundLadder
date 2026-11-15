@@ -40,9 +40,9 @@ struct PriorityListView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Ausgabegeräte nach Priorität")
+                Text("Output devices by priority")
                     .font(.headline)
-                Text("Ziehe die Geräte in die gewünschte Reihenfolge. Ist das oberste nicht verfügbar, wird automatisch das nächste gewählt.")
+                Text("Drag the devices into your preferred order. If the top one isn't available, the next one is selected automatically.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -60,14 +60,14 @@ struct PriorityListView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 8) {
-                Toggle("Automatisch umschalten", isOn: $store.autoSwitch)
-                Toggle("Auch Systemtöne (Hinweise, Effekte) umleiten", isOn: $store.includeSystemOutput)
-                Toggle("Beim Anmelden starten", isOn: $store.launchAtLogin)
+                Toggle("Switch automatically", isOn: $store.autoSwitch)
+                Toggle("Also route system sounds (alerts, effects)", isOn: $store.includeSystemOutput)
+                Toggle("Launch at login", isOn: $store.launchAtLogin)
                 HStack {
-                    Text("Aktuell: \(store.currentName)")
+                    Text("Current: \(store.currentName)")
                         .font(.callout)
                     Spacer()
-                    Button("Jetzt anwenden") { store.apply() }
+                    Button("Apply now") { store.apply() }
                         .keyboardShortcut("r")
                 }
                 HStack {
@@ -75,7 +75,7 @@ struct PriorityListView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Link("Gefällt dir die App? Unterstütze sie auf Ko-fi ♥", destination: Links.donate)
+                    Link("Enjoying the app? Support it on Ko-fi ♥", destination: Links.donate)
                         .font(.caption)
                 }
             }
@@ -110,9 +110,9 @@ struct DeviceRow: View {
                     Circle()
                         .fill(connected ? Color.green : Color.gray.opacity(0.5))
                         .frame(width: 7, height: 7)
-                    Text(connected ? "Verbunden" : "Nicht verbunden")
+                    Text(connected ? L("Connected") : L("Not connected"))
                     if active {
-                        Text("· Aktive Ausgabe").fontWeight(.semibold)
+                        Text("· Active output").fontWeight(.semibold)
                     }
                 }
                 .font(.caption)
@@ -129,7 +129,7 @@ struct DeviceRow: View {
                     Image(systemName: "trash")
                 }
                 .buttonStyle(.borderless)
-                .help("Gerät aus der Liste entfernen")
+                .help("Remove device from list")
             }
 
             Toggle("", isOn: Binding(
@@ -138,15 +138,15 @@ struct DeviceRow: View {
             ))
             .rowSwitchStyle()
             .labelsHidden()
-            .help("Deaktivierte Geräte werden nie automatisch gewählt")
+            .help("Disabled devices are never selected automatically")
         }
         .padding(.vertical, 4)
         .contentShape(Rectangle())
         .contextMenu {
             if let device = store.connected[entry.uid] {
-                Button("Jetzt als Ausgabe verwenden") { store.select(device) }
+                Button("Use as output now") { store.select(device) }
             }
-            Button("Aus Liste entfernen", role: .destructive) { store.forget(entry) }
+            Button("Remove from list", role: .destructive) { store.forget(entry) }
         }
     }
 }
@@ -171,7 +171,7 @@ struct MenuContent: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        Text("Ausgabe: \(store.currentName)")
+        Text("Output: \(store.currentName)")
         Divider()
         ForEach(store.entries.filter { store.isConnected($0) }) { entry in
             if let device = store.connected[entry.uid] {
@@ -187,17 +187,17 @@ struct MenuContent: View {
             }
         }
         Divider()
-        Toggle("Automatisch umschalten", isOn: $store.autoSwitch)
-        Button("Prioritäten bearbeiten …") {
+        Toggle("Switch automatically", isOn: $store.autoSwitch)
+        Button("Edit priorities…") {
             openWindow(id: "main")
             NSApp.activate(ignoringOtherApps: true)
         }
         .keyboardShortcut(",")
         Divider()
-        Button("Projekt unterstützen ♥") { NSWorkspace.shared.open(Links.donate) }
-        Button("Über SoundLadder") { Links.showAbout() }
+        Button("Support the project ♥") { NSWorkspace.shared.open(Links.donate) }
+        Button("About SoundLadder") { Links.showAbout() }
         Divider()
-        Button("Beenden") { NSApp.terminate(nil) }
+        Button("Quit") { NSApp.terminate(nil) }
             .keyboardShortcut("q")
     }
 }

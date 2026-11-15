@@ -2,7 +2,7 @@
 # Baut die App und erzeugt dist/SoundLadder-<Version>.pkg
 set -e
 cd "$(dirname "$0")/.."
-VERSION=${VERSION:-1.2}
+VERSION=${VERSION:-1.3}
 export VERSION
 ./build.sh
 

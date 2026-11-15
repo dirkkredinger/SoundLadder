@@ -26,7 +26,7 @@ final class PriorityStore: ObservableObject {
             do {
                 if launchAtLogin { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
             } catch {
-                lastAction = "Autostart fehlgeschlagen: \(error.localizedDescription)"
+                lastAction = String(format: L("Launch at login failed: %@"), error.localizedDescription)
             }
         }
     }
@@ -138,13 +138,13 @@ final class PriorityStore: ObservableObject {
     /// Wählt das höchstpriorisierte verfügbare Gerät als Ausgabe.
     func apply() {
         guard let target = preferred else {
-            lastAction = "Kein aktiviertes Gerät verfügbar"
+            lastAction = L("No enabled device available")
             return
         }
-        select(target, reason: "Automatisch")
+        select(target, reason: L("Automatic"))
     }
 
-    func select(_ device: AudioDevice, reason: String = "Manuell") {
+    func select(_ device: AudioDevice, reason: String = L("Manual")) {
         guard !isDemo else { return }
         var ok = true
         if CoreAudioHelper.defaultOutput() != device.id {
@@ -155,7 +155,8 @@ final class PriorityStore: ObservableObject {
         }
         currentUID = CoreAudioHelper.defaultOutput().flatMap(CoreAudioHelper.uid(of:))
         let time = Date().formatted(date: .omitted, time: .shortened)
-        lastAction = ok ? "\(reason): \(device.name) (\(time))" : "Umschalten auf \(device.name) fehlgeschlagen"
+        lastAction = ok ? String(format: L("%@: %@ (%@)"), reason, device.name, time)
+                         : String(format: L("Switching to %@ failed"), device.name)
     }
 
     func move(from source: IndexSet, to destination: Int) {
@@ -179,7 +180,7 @@ final class PriorityStore: ObservableObject {
             ("AirPods Pro", kAudioDeviceTransportTypeBluetooth, true, true),
             ("Studio Display", kAudioDeviceTransportTypeDisplayPort, true, true),
             ("LG UltraWide", kAudioDeviceTransportTypeHDMI, true, true),
-            ("MacBook Pro-Lautsprecher", kAudioDeviceTransportTypeBuiltIn, true, true),
+            (L("MacBook Pro Speakers"), kAudioDeviceTransportTypeBuiltIn, true, true),
             ("Zoom Audio Device", kAudioDeviceTransportTypeVirtual, true, false),
         ]
         entries = demo.map { PriorityEntry(uid: "demo.\($0.0)", name: $0.0, enabled: $0.3, transportType: $0.1) }
@@ -189,7 +190,7 @@ final class PriorityStore: ObservableObject {
         }
         connected = devices
         currentUID = "demo.AirPods Pro"
-        lastAction = "Automatisch: AirPods Pro (14:32)"
+        lastAction = String(format: L("%@: %@ (%@)"), L("Automatic"), "AirPods Pro", L("2:32 PM"))
     }
 
     private func save() {

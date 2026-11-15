@@ -1,0 +1,36 @@
+/* Deutsche Übersetzung – Schlüssel sind die englischen Texte im Code */
+
+"Output devices by priority" = "Ausgabegeräte nach Priorität";
+"Drag the devices into your preferred order. If the top one isn't available, the next one is selected automatically." = "Ziehe die Geräte in die gewünschte Reihenfolge. Ist das oberste nicht verfügbar, wird automatisch das nächste gewählt.";
+"Switch automatically" = "Automatisch umschalten";
+"Also route system sounds (alerts, effects)" = "Auch Systemtöne (Hinweise, Effekte) umleiten";
+"Launch at login" = "Beim Anmelden starten";
+"Current: %@" = "Aktuell: %@";
+"Apply now" = "Jetzt anwenden";
+"Enjoying the app? Support it on Ko-fi ♥" = "Gefällt dir die App? Unterstütze sie auf Ko-fi ♥";
+"Connected" = "Verbunden";
+"Not connected" = "Nicht verbunden";
+"· Active output" = "· Aktive Ausgabe";
+"Remove device from list" = "Gerät aus der Liste entfernen";
+"Disabled devices are never selected automatically" = "Deaktivierte Geräte werden nie automatisch gewählt";
+"Use as output now" = "Jetzt als Ausgabe verwenden";
+"Remove from list" = "Aus Liste entfernen";
+"Output: %@" = "Ausgabe: %@";
+"Edit priorities…" = "Prioritäten bearbeiten …";
+"Support the project ♥" = "Projekt unterstützen ♥";
+"About SoundLadder" = "Über SoundLadder";
+"Quit" = "Beenden";
+"Launch at login failed: %@" = "Autostart fehlgeschlagen: %@";
+"No enabled device available" = "Kein aktiviertes Gerät verfügbar";
+"Automatic" = "Automatisch";
+"Manual" = "Manuell";
+"%@: %@ (%@)" = "%1$@: %2$@ (%3$@)";
+"Switching to %@ failed" = "Umschalten auf %@ fehlgeschlagen";
+"MacBook Pro Speakers" = "MacBook Pro-Lautsprecher";
+"2:32 PM" = "14:32";
+"Automatically picks the available audio output with the highest priority." = "Wählt automatisch das verfügbare Audio-Ausgabegerät mit der höchsten Priorität.";
+"Project on GitHub" = "Projekt auf GitHub";
+"Support on Ko-fi ♥" = "Auf Ko-fi unterstützen ♥";
+"Open source under the MIT License." = "Open Source unter der MIT-Lizenz.";
+"Sat Nov 15  2:32 PM" = "Sa. 15. Nov.  14:32";
+"Your audio output,\nalways in the right order." = "Deine Audioausgabe –\nautomatisch nach Rangliste.";

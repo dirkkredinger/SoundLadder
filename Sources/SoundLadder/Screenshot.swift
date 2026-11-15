@@ -77,7 +77,7 @@ enum Screenshot {
             MenuBarIcon.image(autoSwitch: true)
                 .draw(in: NSRect(x: iconX, y: 6, width: 22, height: 18), from: .zero,
                       operation: .sourceOver, fraction: 1, respectFlipped: true, hints: nil)
-            let clock = NSAttributedString(string: "Sa. 15. Nov.  14:32", attributes: [
+            let clock = NSAttributedString(string: L("Sat Nov 15  2:32 PM"), attributes: [
                 .font: NSFont.systemFont(ofSize: 13, weight: .medium), .foregroundColor: NSColor.black.withAlphaComponent(0.8)])
             clock.draw(at: NSPoint(x: rect.width - 160, y: 6))
 
@@ -137,20 +137,20 @@ private struct MenuMock: View {
     }
 
     private let rows: [Row] = [
-        Row(title: "Ausgabe: AirPods Pro", secondary: true),
+        Row(title: String(format: L("Output: %@"), "AirPods Pro"), secondary: true),
         Row(divider: true),
         Row(title: "AirPods Pro", check: true),
         Row(title: "Studio Display"),
         Row(title: "LG UltraWide"),
-        Row(title: "MacBook Pro-Lautsprecher"),
+        Row(title: L("MacBook Pro Speakers")),
         Row(divider: true),
-        Row(title: "Automatisch umschalten", check: true),
-        Row(title: "Prioritäten bearbeiten …", shortcut: "⌘,", highlighted: true),
+        Row(title: L("Switch automatically"), check: true),
+        Row(title: L("Edit priorities…"), shortcut: "⌘,", highlighted: true),
         Row(divider: true),
-        Row(title: "Projekt unterstützen ♥"),
-        Row(title: "Über SoundLadder"),
+        Row(title: L("Support the project ♥")),
+        Row(title: L("About SoundLadder")),
         Row(divider: true),
-        Row(title: "Beenden", shortcut: "⌘Q"),
+        Row(title: L("Quit"), shortcut: "⌘Q"),
     ]
 
     var body: some View {
@@ -195,7 +195,7 @@ private struct TitleMock: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("SoundLadder")
                     .font(.system(size: 44, weight: .heavy, design: .rounded))
-                Text("Deine Audioausgabe –\nautomatisch nach Rangliste.")
+                Text("Your audio output,\nalways in the right order.")
                     .font(.system(size: 20, weight: .medium))
                     .opacity(0.9)
             }

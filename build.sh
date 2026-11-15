@@ -12,6 +12,7 @@ if [ ! -f Resources/AppIcon.icns ]; then
   iconutil -c icns Resources/AppIcon.iconset -o Resources/AppIcon.icns
 fi
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+cp -R Resources/*.lproj "$APP/Contents/Resources/"
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -20,14 +21,16 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleName</key><string>SoundLadder</string>
   <key>CFBundleDisplayName</key><string>SoundLadder</string>
   <key>CFBundleIdentifier</key><string>de.mbmf17.soundladder</string>
+  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>CFBundleLocalizations</key><array><string>en</string><string>de</string></array>
   <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundleExecutable</key><string>SoundLadder</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>${VERSION:-1.2}</string>
+  <key>CFBundleShortVersionString</key><string>${VERSION:-1.3}</string>
   <key>CFBundleVersion</key><string>1</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>LSUIElement</key><true/>
-  <key>NSHumanReadableCopyright</key><string>© 2026 $(git config user.name) · MIT-Lizenz</string>
+  <key>NSHumanReadableCopyright</key><string>© 2026 $(git config user.name) · MIT License</string>
   <key>NSHighResolutionCapable</key><true/>
 </dict>
 </plist>
