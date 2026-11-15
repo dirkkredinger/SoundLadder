@@ -42,7 +42,7 @@ Beispiel:
 
 ## Installation
 
-1. Neuesten Installer (`SoundLadder-x.y.pkg`) unter **Releases** herunterladen.
+1. Neuesten Installer (`SoundLadder-x.y.pkg`) unter **[Releases](https://github.com/dirkkredinger/SoundLadder/releases)** herunterladen.
 2. Die App ist nicht von Apple beglaubigt (kein kostenpflichtiges Entwicklerkonto). Beim ersten Öffnen daher:
    **Rechtsklick auf die .pkg → Öffnen → Öffnen** bestätigen.
    Alternativ: *Systemeinstellungen → Datenschutz & Sicherheit → „Dennoch öffnen“*.

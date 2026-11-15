@@ -3,8 +3,7 @@ import AppKit
 /// Externe Links an einer Stelle – vor der Veröffentlichung hier anpassen.
 enum Links {
     static let donate = URL(string: "https://ko-fi.com/mbmf17")!
-    // TODO: echte GitHub-Adresse eintragen
-    static let project = URL(string: "https://github.com/DEIN_GITHUB_NAME/SoundLadder")!
+    static let project = URL(string: "https://github.com/dirkkredinger/SoundLadder")!
 
     static func showAbout() {
         let credits = NSMutableAttributedString(
