@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "AudioPriority",
+    name: "SoundLadder",
     platforms: [.macOS(.v13)],
     targets: [
         .executableTarget(
-            name: "AudioPriority",
-            path: "Sources/AudioPriority",
+            name: "SoundLadder",
+            path: "Sources/SoundLadder",
             linkerSettings: [.linkedFramework("CoreAudio"), .linkedFramework("ServiceManagement")]
         )
     ]

@@ -2,7 +2,7 @@
   <img src="Resources/icon.png" width="128" alt="App-Icon">
 </p>
 
-<h1 align="center">Audio-Prioritäten</h1>
+<h1 align="center">SoundLadder</h1>
 
 <p align="center">
   Kleine macOS-Menüleisten-App, die deine Audioausgabe nach einer festen Rangliste wählt.<br>
@@ -18,7 +18,7 @@
 ## Warum?
 
 macOS schaltet beim Anstecken eines Geräts oft auf irgendetwas um – Monitor-Lautsprecher, USB-Dongle, Kopfhörer.
-Mit Audio-Prioritäten legst du **einmal** fest, was du bevorzugst, und die App sorgt dafür, dass es so bleibt.
+Mit SoundLadder legst du **einmal** fest, was du bevorzugst, und die App sorgt dafür, dass es so bleibt.
 
 Beispiel:
 
@@ -42,7 +42,7 @@ Beispiel:
 
 ## Installation
 
-1. Neuesten Installer (`AudioPriority-x.y.pkg`) unter **Releases** herunterladen.
+1. Neuesten Installer (`SoundLadder-x.y.pkg`) unter **Releases** herunterladen.
 2. Die App ist nicht von Apple beglaubigt (kein kostenpflichtiges Entwicklerkonto). Beim ersten Öffnen daher:
    **Rechtsklick auf die .pkg → Öffnen → Öffnen** bestätigen.
    Alternativ: *Systemeinstellungen → Datenschutz & Sicherheit → „Dennoch öffnen“*.
@@ -53,26 +53,26 @@ Voraussetzung: macOS 13 Ventura oder neuer, Apple Silicon oder Intel.
 
 ### Deinstallieren
 
-App beenden und `/Programme/AudioPriority.app` in den Papierkorb legen – oder `Installer/uninstall.sh` ausführen (entfernt auch die Einstellungen).
+App beenden und `/Programme/SoundLadder.app` in den Papierkorb legen – oder `Installer/uninstall.sh` ausführen (entfernt auch die Einstellungen).
 
 ## Selbst bauen
 
 Benötigt nur die Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
-./build.sh                               # -> build/AudioPriority.app
-VERSION=1.2 Installer/make_installer.sh  # -> dist/AudioPriority-1.2.pkg
+./build.sh                               # -> build/SoundLadder.app
+VERSION=1.2 Installer/make_installer.sh  # -> dist/SoundLadder-1.2.pkg
 ```
 
 ### Aufbau
 
 | Datei | Inhalt |
 |---|---|
-| `Sources/AudioPriority/CoreAudioHelper.swift` | Zugriff auf CoreAudio: Geräte, Standardausgabe, Listener |
-| `Sources/AudioPriority/PriorityStore.swift` | Prioritätenliste, Speicherung, Umschaltlogik |
-| `Sources/AudioPriority/AudioPriorityApp.swift` | SwiftUI-Fenster und Menüleisten-Menü |
-| `Sources/AudioPriority/MenuBarIcon.swift` | Menüleisten-Symbol |
-| `Sources/AudioPriority/Links.swift` | Spenden-/Projekt-Links, „Über“-Fenster |
+| `Sources/SoundLadder/CoreAudioHelper.swift` | Zugriff auf CoreAudio: Geräte, Standardausgabe, Listener |
+| `Sources/SoundLadder/PriorityStore.swift` | Prioritätenliste, Speicherung, Umschaltlogik |
+| `Sources/SoundLadder/SoundLadderApp.swift` | SwiftUI-Fenster und Menüleisten-Menü |
+| `Sources/SoundLadder/MenuBarIcon.swift` | Menüleisten-Symbol |
+| `Sources/SoundLadder/Links.swift` | Spenden-/Projekt-Links, „Über“-Fenster |
 | `Tools/make_icon.swift` | erzeugt das App-Icon |
 | `Installer/` | pkg-Installer und Deinstallations-Skript |
 
@@ -86,7 +86,7 @@ Fehler gefunden oder Idee? Gerne als Issue melden.
 
 ## English
 
-**Audio-Prioritäten** is a tiny macOS menu bar app that picks your audio output from a ranked list:
+**SoundLadder** is a tiny macOS menu bar app that picks your audio output from a ranked list:
 if the top device isn't connected, the next available one is used. Drag & drop ordering, auto-switching
 on connect/disconnect, excluded devices, optional system-sound routing, launch at login.
 Download the `.pkg` from Releases (right-click → Open on first launch, as it isn't notarized).

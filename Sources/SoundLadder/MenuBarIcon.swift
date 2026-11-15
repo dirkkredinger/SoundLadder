@@ -28,7 +28,7 @@ enum MenuBarIcon {
             return true
         }
         img.isTemplate = true
-        img.accessibilityDescription = "Audio-Prioritäten"
+        img.accessibilityDescription = "SoundLadder"
         return img
     }
 }

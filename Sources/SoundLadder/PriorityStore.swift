@@ -39,7 +39,18 @@ final class PriorityStore: ObservableObject {
     }
     private var pendingRefresh: DispatchWorkItem?
 
+    /// Übernimmt einmalig die Einstellungen der Vorgängerversion „AudioPriority“.
+    private static func migrateLegacySettings() {
+        let current = UserDefaults.standard
+        guard current.data(forKey: Keys.entries) == nil,
+              let legacy = UserDefaults(suiteName: "local.audiopriority") else { return }
+        for key in [Keys.entries, Keys.auto, Keys.system] {
+            if let value = legacy.object(forKey: key) { current.set(value, forKey: key) }
+        }
+    }
+
     init() {
+        Self.migrateLegacySettings()
         autoSwitch = defaults.object(forKey: Keys.auto) as? Bool ?? true
         includeSystemOutput = defaults.object(forKey: Keys.system) as? Bool ?? true
         if let data = defaults.data(forKey: Keys.entries),

@@ -1,4 +1,8 @@
 #!/bin/sh
-# Laufende Instanz beenden, damit sie ersetzt werden kann
+# Laufende Instanzen beenden, damit sie ersetzt werden können
+pkill -x SoundLadder 2>/dev/null
+# Vorgängerversion „AudioPriority“ ersetzen (Einstellungen übernimmt die App selbst)
 pkill -x AudioPriority 2>/dev/null
+rm -rf "/Applications/AudioPriority.app"
+pkgutil --forget local.audiopriority.pkg >/dev/null 2>&1
 exit 0

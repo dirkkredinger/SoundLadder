@@ -4,7 +4,7 @@ import AppKit
 enum Links {
     static let donate = URL(string: "https://ko-fi.com/mbmf17")!
     // TODO: echte GitHub-Adresse eintragen
-    static let project = URL(string: "https://github.com/DEIN_GITHUB_NAME/AudioPriority")!
+    static let project = URL(string: "https://github.com/DEIN_GITHUB_NAME/SoundLadder")!
 
     static func showAbout() {
         let credits = NSMutableAttributedString(

@@ -3,11 +3,11 @@ import CoreAudio
 import SwiftUI
 
 @main
-struct AudioPriorityApp: App {
+struct SoundLadderApp: App {
     @StateObject private var store = PriorityStore()
 
     var body: some Scene {
-        Window("Audio-Prioritäten", id: "main") {
+        Window("SoundLadder", id: "main") {
             PriorityListView()
                 .environmentObject(store)
                 .frame(minWidth: 460, minHeight: 380)
@@ -188,7 +188,7 @@ struct MenuContent: View {
         .keyboardShortcut(",")
         Divider()
         Button("Projekt unterstützen ♥") { NSWorkspace.shared.open(Links.donate) }
-        Button("Über Audio-Prioritäten") { Links.showAbout() }
+        Button("Über SoundLadder") { Links.showAbout() }
         Divider()
         Button("Beenden") { NSApp.terminate(nil) }
             .keyboardShortcut("q")
